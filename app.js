@@ -8,7 +8,7 @@ const User = require('./models/User');
 const Hotel = require('./models/Hotel');
 const Room = require('./models/Room');
 const Booking = require('./models/Booking');
-
+require('dotenv').config();
 const app = express();
 connectDB();
 
@@ -405,7 +405,7 @@ app.get('/logout', (req, res) => {
 
 
 
-const port = 7000;
+const port = process.env.PORT || 7000;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
