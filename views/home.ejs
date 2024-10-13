@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/stylehome.css">
+    <title>Hotel Rooms Management System</title>
+</head>
+<body>
+  
+    <div class="container">
+        <div class="sidebar">
+            <!-- Render the hotel name dynamically -->
+            <% if (hotel) { %>
+                <h2><%= hotel.hotelname %> Hotel</h2>
+            <% } else { %>
+                <h2>Hotel Management</h2>
+            <% } %>
+
+            <ul>
+                <li><a href="/home">Dashboard</a></li>
+                <li><a href="/book-room">Book Rooms</a></li>
+                <li><a href="/bookings">View Bookings</a></li>
+                <li><a href="/Settings">Settings</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <h1>Dashboard</h1>
+
+            <div class="cards">
+                <div class="card">
+                    <h3>Total Rooms</h3>
+                    <p>
+                        <% if (hotel) { %>
+                            <%= hotel.totelrooms %> 
+                        <% } else { %>
+                            Not Added
+                        <% } %>
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Available Rooms</h3>
+                    <p><%= availableRooms %></p>
+                </div>
+
+                <a href="/bookings">
+                    <div class="card">
+                        <h3>Booked Rooms</h3>
+                        <p><%= bookedRooms %></p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Room Status Section -->
+            <h2>Room Status</h2>
+            <div class="room-grid" id="roomGrid">
+                <!-- Loop through rooms and display them -->
+                <% rooms.forEach(room => { %>
+                    <div class="room-card">
+                        <h3><a href="">Room <%= room.roomNumber %></a></h3>
+                        <p>Status: <%= room.status %></p>
+
+                        <!-- Show check-in and check-out data for the room -->
+                        <% if (room.booking) { %>
+                            <p><strong>Check-In:</strong> <%= room.booking.checkIn.toDateString() %></p>
+                            <p><strong>Check-Out:</strong> <%= room.booking.checkOut.toDateString() %></p>
+                        <% } else { %>
+                            <p>No booking data available.</p>
+                        <% } %>
+
+                        <!-- Form for deleting the specific room -->
+                        <form action="/delete-room" method="POST" style="display:inline;">
+                            <input type="hidden" name="roomNumber" value="<%= room.roomNumber %>">
+                            <button type="submit">Delete Room</button>
+                  
+                            <!-- Check if the room has a booking, and link to the booking details page -->
+<% if (room.booking) { %>
+    <a href="/view-booking/<%= room.booking._id %>">View Details</a>
+<% } else { %>
+    <a href="/book-room">Book Now</a>
+<% } %>
+
+                        </form>
+                       
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
