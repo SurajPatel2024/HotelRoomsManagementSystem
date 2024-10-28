@@ -1,89 +1,115 @@
- 
- /* Login Page Css */
-
-
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Arial', sans-serif;
+    background-color: #f3f6fb; /* Light background */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
+    color: #f3eeee;
+    background-image: url('https://img.freepik.com/free-vector/futuristic-background-design_23-2148503793.jpg');
+    background-clip: none;
+   background-repeat: no-repeat;
+   background-size: cover;
+   
 }
 
-/* Form container styling */
 .form-container {
-    background: white;
-    padding: 20px;
+    background-color: #ffffffb0; /* White card */
+    background-color: transparent;
+    backdrop-filter: blur(10px);
+    padding: 40px 30px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    box-shadow: 0 4px 15px rgb(235, 5, 120);
+    width: 100%;
+    max-width: 400px;
     text-align: center;
+   
+     
 }
 
-/* Heading styles */
 h2 {
-    color: #333;
+    color: #ffffff; /* Navy Blue */
     margin-bottom: 20px;
+    font-size: 28px;
+}
+ 
+.form-container p {
+    margin-top: 20px;
+    font-size: 14px;
 }
 
-/* Input field styles */
 .from-group {
-    
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     text-align: left;
 }
 
-.from-group label {
+label {
     display: block;
-    margin-bottom: 5px;
-    color: #555;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #ffffff;
 }
 
-.from-group input {
+input[type="text"], input[type="password"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
 }
 
-/* Button styles */
+input[type="text"]:focus, input[type="password"]:focus {
+    border-color: #38a1db; /* Teal when focused */
+    outline: none;
+}
+
 .submit-btn {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px;
     width: 100%;
-    border-radius: 5px;
+    padding: 12px;
+    background-color: #38a1db; /* Teal */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease;
 }
 
 .submit-btn:hover {
-    background-color: #0056b3;
+    background-color: #2c91b6; /* Darker Teal on hover */
 }
 
-/* Link styling */
-p {
-    margin-top: 10px;
-}
-
-p a {
-    color: #007bff;
+a {
+    color: #38a1db; /* Teal links */
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
-p a:hover {
-    text-decoration: underline;
+a:hover {
+    color: #1b3b5f; /* Navy Blue on hover */
 }
 
-/* Responsive styles */
-@media (max-width: 768px) {
+/* Responsive for mobile screens */
+@media (max-width: 480px) {
     .form-container {
+        padding: 30px 20px;
         width: 90%;
-        padding: 15px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    .submit-btn {
+        padding: 10px;
+        font-size: 15px;
     }
 }

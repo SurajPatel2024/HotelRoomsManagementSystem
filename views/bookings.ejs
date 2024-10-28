@@ -5,137 +5,146 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking Details</title>
     <style>
-        /* Reset some basic elements */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            background-color: #f4f4f4;
-            padding: 20px;
-        }
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 20px;
+    line-height: 1.6;
+}
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 2rem;
-            color: #333;
-        }
+h1 {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
 
-        .table-wrapper {
-            overflow-x: auto; /* Ensure table is scrollable on smaller screens */
-            background-color: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
+.table-wrapper {
+    overflow-x: auto; /* Ensure table is scrollable on smaller screens */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
+th, td {
+    padding: 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+    transition: background-color 0.3s ease;
+}
 
-        th {
-            background-color: #f7f7f7;
-            font-weight: bold;
-            color: #555;
-        }
+th {
+    background-color: #f7f7f7;
+    font-weight: bold;
+    color: #555;
+}
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
 
-        tr:hover {
-            background-color: #f1f1f1;
-        }
+tr:hover {
+    background-color: #f1f1f1;
+}
 
-        th, td {
-            padding: 15px;
-            text-align: left;
-            transition: background-color 0.3s ease;
-        }
+/* Make table more compact for mobile screens */
+@media (max-width: 768px) {
+    th, td {
+        padding: 12px;
+        font-size: 14px;
+    }
+    
+    /* Hide less important columns on smaller screens */
+    th:nth-child(3), td:nth-child(3),  /* Guest Mobile Number */
+    th:nth-child(6), td:nth-child(6)  /* Number of Guests */ {
+        display: none;
+    }
+}
 
-        /* Responsive styling for smaller screens */
-        @media (max-width: 768px) {
-            th, td {
-                padding: 10px;
-                font-size: 14px;
-            }
+@media (max-width: 480px) {
+    th, td {
+        padding: 8px;
+        font-size: 12px;
+    }
 
-            /* Hide some columns on smaller screens */
-            th:nth-child(3), td:nth-child(3), /* Guest Mobile Number */
-            th:nth-child(6), td:nth-child(6) /* Number of Guests */ {
-                display: none;
-            }
-        }
+    th:nth-child(5), td:nth-child(5), /* Check-Out Date */
+    th:nth-child(4), td:nth-child(4), /* Check-In Date */
+    th:nth-child(7), td:nth-child(7)  /* Total Price */ {
+        display: none;
+    }
+}
 
-        @media (max-width: 480px) {
-            th, td {
-                padding: 8px;
-                font-size: 12px;
-            }
+/* Buttons and Links */
+/* General Button Styling */
+a, .btn {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: #3498db;
+    background-image: linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%);
+    
+ 
+    border-radius: 4px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-right: 5px;
+    cursor: pointer;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
 
-            th:nth-child(5), td:nth-child(5), /* Check-Out Date */
-            th:nth-child(4), td:nth-child(4), /* Check-In Date */
-            th:nth-child(7), td:nth-child(7) /* Total Price */ {
-                display: none;
-            }
-        }
+a:hover, .btn:hover {
+    background-color: #2980b9; /* Darker Blue on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
 
-        /* Link styling */
-        a {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            text-align: center;
-            transition: background-color 0.3s ease;
-        }
+/* Delete Button Styling */
+.btn-danger {
+    background-color: #e74c3c; /* Red Delete Button */
+    border: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
 
-        a:hover {
-            background-color: #45a049;
-        }
+.btn-danger:hover {
+    background-color: #c0392b; /* Darker Red on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
 
-        /* Button styling inside the table */
-        .btn {
-            padding: 8px 12px;
-            border: none;
-            background-color: #3498db;
-            color: white;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+.btn-danger:active {
+    background-color: #a93226; /* Even darker on click */
+    box-shadow: none; /* Remove shadow on click for a pressed effect */
+}
 
-        .btn:hover {
-            background-color: #2980b9;
-        }
+/* Add a subtle animation to make the button more interactive */
+.btn-danger {
+    transform: scale(1);
+    transition: transform 0.2s ease;
+}
 
-        .btn-danger {
-            background-color: #e74c3c;
-        }
+.btn-danger:hover {
+    transform: scale(1.05); /* Slight grow effect on hover */
+}
 
-        .btn-danger:hover {
-            background-color: #c0392b;
-        }
+.btn-danger:active {
+    transform: scale(0.98); /* Shrink a bit on click for a pressed effect */
+}
 
-        form {
-            display: inline;
-        }
     </style>
 </head>
 <body>

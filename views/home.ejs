@@ -7,87 +7,115 @@
     <title>Hotel Rooms Management System</title>
 </head>
 <body>
-  
-    <div class="container">
-        <div class="sidebar">
-            <!-- Render the hotel name dynamically -->
-            <% if (hotel) { %>
-                <h2><%= hotel.hotelname %> Hotel</h2>
-            <% } else { %>
-                <h2>Hotel Management</h2>
-            <% } %>
-
-            <ul>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <% if (hotel) { %>
+                    <h1><%= hotel.hotelname %> Hotel</h1>
+                <% } else { %>
+                    <h1>Hotel Management</h1>
+                <% } %>
+            </div>
+            <ul class="nav-links" id="navLinks">
                 <li><a href="/home">Dashboard</a></li>
                 <li><a href="/book-room">Book Rooms</a></li>
                 <li><a href="/bookings">View Bookings</a></li>
-                <li><a href="/Settings">Settings</a></li>
+                <li><a href="/settings">Settings</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
+            <div class="menu-icon" onclick="toggleSidebar()">&#9776;</div>
+        </nav>
+    </header>
+
+    <aside class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="/home">Dashboard</a></li>
+            <li><a href="/book-room">Book Rooms</a></li>
+            <li><a href="/bookings">View Bookings</a></li>
+            <li><a href="/settings">Settings</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <h1>Dashboard</h1>
+
+        <div class="cards">
+            <div class="card">
+                <h3>Total Rooms</h3>
+                <p>
+                    <% if (hotel) { %>
+                        <%= hotel.totelrooms %> 
+                    <% } else { %>
+                        Not Added
+                    <% } %>
+                </p>
+                
+            </div>
+            <div class="card">
+                <h3 ">Available Rooms</h3>
+                <p><%= availableRooms %></p>
+            </div>
+            <div class="card">
+                <h3 >Booked Rooms</h3>
+                <p><%= bookedRooms %></p>
+            </div>
         </div>
 
-        <div class="main-content">
-            <h1>Dashboard</h1>
+        <h2>Room Status</h2>
+        <div class="room-grid">
+            <% rooms.forEach(room => { %>
+                <div class="room-card">
+                    <h3>Room <%= room.roomNumber %></h3>
+                    <p>Status: <%= room.status %></p>
 
-            <div class="cards">
-                <div class="card">
-                    <h3>Total Rooms</h3>
-                    <p>
-                        <% if (hotel) { %>
-                            <%= hotel.totelrooms %> 
-                        <% } else { %>
-                            Not Added
-                        <% } %>
-                    </p>
-                </div>
-                <div class="card">
-                    <h3>Available Rooms</h3>
-                    <p><%= availableRooms %></p>
-                </div>
+                    <% if (room.booking) { %>
+                        <p><strong>Check-In:</strong> <%= room.booking.checkIn.toDateString() %></p>
+                        <p><strong>Check-Out:</strong> <%= room.booking.checkOut.toDateString() %></p>
+                    <% } else { %>
+                        <p>No booking data available.</p>
+                    <% } %>
 
-                <a href="/bookings">
-                    <div class="card">
-                        <h3>Booked Rooms</h3>
-                        <p><%= bookedRooms %></p>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Room Status Section -->
-            <h2>Room Status</h2>
-            <div class="room-grid" id="roomGrid">
-                <!-- Loop through rooms and display them -->
-                <% rooms.forEach(room => { %>
-                    <div class="room-card">
-                        <h3><a href="">Room <%= room.roomNumber %></a></h3>
-                        <p>Status: <%= room.status %></p>
-
-                        <!-- Show check-in and check-out data for the room -->
+                    <form action="/delete-room" method="POST">
+                        <input type="hidden" name="roomNumber" value="<%= room.roomNumber %>">
+                        <button class="btn delete-btn" type="submit">Delete Room</button>
                         <% if (room.booking) { %>
-                            <p><strong>Check-In:</strong> <%= room.booking.checkIn.toDateString() %></p>
-                            <p><strong>Check-Out:</strong> <%= room.booking.checkOut.toDateString() %></p>
+                            <a href="/view-booking/<%= room.booking._id %>" class="btn details-btn">View Details</a>
                         <% } else { %>
-                            <p>No booking data available.</p>
+                            <a href="/book-room" class="btn book-btn">Book Now</a>
                         <% } %>
-
-                        <!-- Form for deleting the specific room -->
-                        <form action="/delete-room" method="POST" style="display:inline;">
-                            <input type="hidden" name="roomNumber" value="<%= room.roomNumber %>">
-                            <button type="submit">Delete Room</button>
-                  
-                            <!-- Check if the room has a booking, and link to the booking details page -->
-<% if (room.booking) { %>
-    <a href="/view-booking/<%= room.booking._id %>">View Details</a>
-<% } else { %>
-    <a href="/book-room">Book Now</a>
-<% } %>
-
-                        </form>
-                       
-                    </div>
-                <% }) %>
-            </div>
+                    </form>
+                </div>
+            <% }) %>
         </div>
-    </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Hotel Rooms Management System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+    
+        // Close the menu when clicking outside of it
+        document.addEventListener('click', function (event) {
+            const menuIcon = document.querySelector('.menu-icon');
+            const navLinks = document.getElementById('navLinks');
+    
+            if (!menuIcon.contains(event.target) && !navLinks.contains(event.target)) {
+                navLinks.classList.remove('active'); // Close the menu if clicked outside
+            }
+        });
+    
+        // Attach the toggle function to the menu icon
+        document.querySelector('.menu-icon').addEventListener('click', function (event) {
+            event.stopPropagation(); // Prevent the event from closing the menu when clicking the icon
+            toggleMenu();
+        });
+    </script>
+    
 </body>
 </html>

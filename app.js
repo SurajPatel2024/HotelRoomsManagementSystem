@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require('express');
 const path = require('path');
 const bcrypt = require('bcrypt');
@@ -8,7 +9,7 @@ const User = require('./models/User');
 const Hotel = require('./models/Hotel');
 const Room = require('./models/Room');
 const Booking = require('./models/Booking');
-require('dotenv').config();
+
 const app = express();
 connectDB();
 
@@ -164,12 +165,7 @@ app.post('/settings', isAuthenticated, async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
-
-
-
-
-
-// Example Express route to get room details
+ 
 // Example Express route to get room details
 app.get('/room/:roomNumber', async (req, res) => {
     const roomNumber = req.params.roomNumber;
@@ -204,11 +200,7 @@ app.get('/view-booking/:id', isAuthenticated, async (req, res) => {
     }
 });
 
-
-
-
-
-
+ 
 // Book a room by room number
 app.post('/book-room', isAuthenticated, async (req, res) => {
     const { guestName, guestMobile, roomNumber, checkIn, checkOut, guestCount, roomprice, paymentStatus } = req.body;
@@ -319,12 +311,7 @@ app.post('/delete-booking/:id', isAuthenticated, async (req, res) => {
     }
 });
 
-
-
-
-
-
-
+ 
 
 // View all bookings
 app.get('/bookings', isAuthenticated, async (req, res) => {
@@ -337,13 +324,7 @@ app.get('/bookings', isAuthenticated, async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
-
-
-
-
-
-
-
+ 
 app.post('/delete-room', isAuthenticated, async (req, res) => {
     const { roomNumber } = req.body;
 
@@ -372,19 +353,7 @@ app.post('/delete-room', isAuthenticated, async (req, res) => {
     }
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 // Logout Route
 app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
@@ -394,18 +363,9 @@ app.get('/logout', (req, res) => {
         res.redirect('/');
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-const port = process.env.PORT || 7000;
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+ 
+ 
+const PORT = process.env.PORT||5000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
