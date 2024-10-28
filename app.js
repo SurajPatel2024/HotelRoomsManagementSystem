@@ -15,11 +15,15 @@ connectDB();
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+const MongoStore = require('connect-mongo');
+
 app.use(session({
-    secret: 'your-secret-key',
+    secret: process.env.SESSION_SECRET || 'your-secret-key',
     resave: false,
     saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: process.env.DATABASE_URL })
 }));
+
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
