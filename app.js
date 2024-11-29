@@ -11,7 +11,7 @@ const Room = require('./models/Room');
 const Booking = require('./models/Booking');
 
 const app = express();
-connectDB();
+connectDB(); 
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -203,7 +203,8 @@ app.get('/view-booking/:id', isAuthenticated, async (req, res) => {
         res.status(500).send('Server error');
     }
 });
-
+ 
+ 
  
 // Book a room by room number
 app.post('/book-room', isAuthenticated, async (req, res) => {

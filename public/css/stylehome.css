@@ -2,17 +2,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f3f6fb; /* Light Grayish Blue */
+    line-height: 1.6;
+    background-color: #fce4ec; /* Light Pink */
     color: #333;
     line-height: 1.6;
-}
-
-header {
-    margin-bottom: 20px;
 }
 
 /* Navbar Styles */
@@ -20,75 +17,48 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-image: linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%);
-    padding: 15px 25px;
-    color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-image: linear-gradient(-20deg, #e91e63 0%, #f06292 100%); /* Pink Gradient */
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar:hover {
+    background-image: linear-gradient(-20deg, #f06292 0%, #e91e63 100%);
 }
 
 .navbar .logo h1 {
-    color: #fff;
-    font-size: 26px;
-    text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.7);
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .nav-links {
-    list-style: none;
     display: flex;
+    list-style: none;
     gap: 20px;
 }
 
 .nav-links li a {
-    color: #ffffff;
-    font-weight: bold;
     text-decoration: none;
-    padding: 10px 15px;
-    display: block;
-    transition: color 0.3s ease;
+    color: #fff;
+    font-size: 1rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
 }
 
 .nav-links li a:hover {
-    color: #15ff00;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
 }
 
 .menu-icon {
     display: none;
-    font-size: 30px;
+    font-size: 2rem;
     cursor: pointer;
-}
-
-/* Sidebar Styles */
-.sidebar {
-    width: 250px;
-    background-color: #1b3b5f;
-    padding: 15px;
-    position: fixed;
-    top: 0;
-    right: -250px;
-    bottom: 0;
-    transition: right 0.3s ease;
-    z-index: 1000;
-}
-
-.sidebar.active {
-    right: 0;
-}
-
-.sidebar ul {
-    list-style: none;
-}
-
-.sidebar ul li a {
-    color: #ffffff;
-    font-size: 18px;
-    padding: 10px;
-    display: block;
-    transition: background-color 0.3s ease;
-}
-
-.sidebar ul li a:hover {
-    background-color: #ff6b6b;
-    border-radius: 5px;
+    color: #fff;
 }
 
 /* Main content layout */
@@ -96,7 +66,12 @@ header {
     padding: 20px;
     background-color: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.main-content:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* Cards Layout */
@@ -105,10 +80,11 @@ header {
     flex-wrap: wrap;
     gap: 20px;
     text-align: center;
+    justify-content: space-between;
 }
 
 .card {
-    background-image: linear-gradient(-20deg, #6e45e2 0%, #88d3ce 100%);
+    background-image: linear-gradient(-20deg, #ec407a 0%, #f48fb1 100%); /* Pink Gradient */
     color: white;
     padding: 20px;
     flex: 1;
@@ -129,10 +105,11 @@ header {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    justify-content: space-between;
 }
 
 .room-card {
-    background: linear-gradient(60deg, #abecd6 0%, #fbed96 100%);
+    background: linear-gradient(60deg, #f06292 0%, #f8bbd0 100%); /* Light Pink Gradient */
     background-image: url('https://img.freepik.com/premium-photo/choosing-booking-hotel-online_1029469-273009.jpg');
     background-position: right;
     background-size: 200px;
@@ -141,49 +118,110 @@ header {
     border-radius: 8px;
     width: calc(33.333% - 20px);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+    opacity: 0.9;
 }
 
 .room-card:hover {
     transform: scale(1.05);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    opacity: 1;
 }
 
 /* Button styles */
 .btn {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 12px 24px; /* Increased padding for better size */
     color: #fff;
     text-align: center;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px; /* Slightly rounder edges */
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px; /* Added letter spacing for better readability */
 }
 
 .book-btn {
-    background-color: #38a1db;
+    background-color: #ec407a; /* Pink */
 }
 
 .book-btn:hover {
-    background-color: #2c91b6;
+    background-color: #f06292; /* Light Pink */
+    transform: translateY(-3px); /* Slight lift effect */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow on hover */
 }
 
 .delete-btn {
-    background-color: #e63946;
+    background-color: #e53935; /* Red-Pink */
 }
 
 .delete-btn:hover {
-    background-color: #c92433;
+    background-color: #c62828; /* Darker Red-Pink */
+    transform: translateY(-3px); /* Slight lift effect */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow on hover */
 }
 
 .details-btn {
-    background-color: #33991f;
+    background-color: #05b814; /* Purple-Pink */
 }
 
 .details-btn:hover {
-    background-color: #0d8836;
+    background-color: #2faa24; /* Darker Purple-Pink */
+    transform: translateY(-3px); /* Slight lift effect */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow on hover */
+}
+
+/* Rounded primary button */
+.primary-btn {
+    background-color: #f06292; /* Light Pink */
+    color: #fff;
+    padding: 12px 30px; /* Slightly larger padding */
+    border-radius: 25px; /* Fully rounded corners */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.primary-btn:hover {
+    background-color: #ec407a; /* Darker Pink */
+    transform: translateY(-4px); /* Slight lift effect */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Stronger shadow on hover */
+}
+
+/* Flat button style */
+.flat-btn {
+    background-color: transparent;
+    border: 2px solid #f06292; /* Pink border */
+    color: #f06292; /* Pink text */
+    padding: 12px 30px;
+    border-radius: 25px;
+    transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+}
+
+.flat-btn:hover {
+    background-color: #f06292; /* Pink background on hover */
+    color: #fff; /* White text on hover */
+    transform: translateY(-3px); /* Slight lift effect */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow on hover */
+}
+
+/* Secondary Button */
+.secondary-btn {
+    background-color: #f8bbd0; /* Soft Pink */
+    color: #f06292; /* Dark Pink */
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1rem;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.secondary-btn:hover {
+    background-color: #f06292; /* Darker Pink */
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Room Status Styles */
@@ -195,34 +233,106 @@ header {
 }
 
 .room-status.booked {
-    background-color: #e63946;
+    background-color: #e53935; /* Red-Pink */
 }
 
 .room-status.available {
-    background-color: #38a1db;
+    background-color: #ec407a; /* Pink */
 }
 
 /* Responsive Styles */
 @media (max-width: 768px) {
+    .menu-icon {
+        display: block;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #fff;
+        z-index: 2;
+    }
+
     .nav-links {
-        display: none;
-        flex-direction: column;
-        background-image: linear-gradient(20deg, #21d4fd 0%, #b721ff 100%);
-        text-shadow: 0px 0px 4px rgb(165, 165, 165);
         position: absolute;
-        top: 60px;
+        top: 0;
         right: 0;
-        width: 100%;
-        text-align: center;
+        background: #ec407a; /* Pink */
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-around;
+        width: 100%; /* Full width */
+        height: 100vh; /* Full screen height */
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+        z-index: 1;
+        padding-top: 60px; /* Space for the navbar */
     }
 
     .nav-links.active {
-        display: flex;
+        transform: translateX(0);
+    }
+
+    .nav-links li {
+        padding: 20px;
+        width: 100%;
+        text-align: center;
+        font-size: 1.2rem; /* Larger font for readability */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Divider for each link */
+    }
+
+    .nav-links li a {
+        color: #fff;
+        font-size: 1.2rem;
+        text-decoration: none;
+        display: block;
+        padding: 10px 0;
+        transition: color 0.3s ease;
+    }
+
+    .nav-links li a:hover {
+        color: #f06292; /* Light Pink on hover */
     }
 
     .menu-icon {
+        position: absolute;
+        top: 20px;
+        right: 20px; /* Positioned at the top-right */
+        z-index: 2;
+    }
+
+    /* Optional close icon */
+/* Close menu button for mobile view */
+.close-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
+    z-index: 2;
+}
+
+/* Display close icon when nav menu is active */
+.nav-links.active + .close-menu {
+    display: block;
+}
+
+    /* Overlay for dark background */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 0;
+        display: none;
+    }
+
+    .overlay.active {
         display: block;
     }
+ 
+
 
     .cards {
         flex-direction: column;
@@ -231,24 +341,19 @@ header {
     .room-card {
         width: 100%;
     }
-
-    .sidebar {
-        width: 100%;
-        right: -100%;
-    }
-
-    .sidebar.active {
-        right: 0;
-    }
-   
 }
 
 /* Footer Styles */
 footer {
-    background-image: linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%);
-    color: #e7f3f3;
+    background-image: linear-gradient(-20deg, #ec407a 0%, #f48fb1 100%); /* Pink Gradient */
+    color: #ffffff;
     font-weight: 600;
     text-align: center;
     padding: 20px;
     width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+footer:hover {
+    background-image: linear-gradient(-20deg, #f48fb1 0%, #ec407a 100%);
 }
