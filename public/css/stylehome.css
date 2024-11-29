@@ -206,7 +206,9 @@ body {
     
     .btn{
         font-weight: 500;
-        padding: 8px 16px;
+        padding: 10px 16px;
+        margin-left: 5px;
+        margin-top: 8px;
     }
 
     .nav-links {
