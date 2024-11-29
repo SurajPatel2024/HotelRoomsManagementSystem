@@ -1,3 +1,4 @@
+/* Global Styles */
 * {
     margin: 0;
     padding: 0;
@@ -9,7 +10,6 @@ body {
     line-height: 1.6;
     background-color: #fce4ec; /* Light Pink */
     color: #333;
-    line-height: 1.6;
 }
 
 /* Navbar Styles */
@@ -17,7 +17,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-image: linear-gradient(-20deg, #e91e63 0%, #f06292 100%); /* Pink Gradient */
+    background-color: #e91e63; /* Fallback */
+    background-image: linear-gradient(-20deg, #e91e63 0%, #f06292 100%);
     padding: 10px 20px;
     transition: background-color 0.3s ease;
 }
@@ -90,14 +91,14 @@ body {
     flex: 1;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     min-width: 250px;
     text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.7);
 }
 
 .card:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Room grid */
@@ -109,7 +110,7 @@ body {
 }
 
 .room-card {
-    background: linear-gradient(60deg, #f06292 0%, #f8bbd0 100%); /* Light Pink Gradient */
+    background: linear-gradient(60deg, #f06292 0%, #f8bbd0 100%);
     background-image: url('https://img.freepik.com/premium-photo/choosing-booking-hotel-online_1029469-273009.jpg');
     background-position: right;
     background-size: 200px;
@@ -120,6 +121,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
     opacity: 0.9;
+    background-blend-mode: overlay;
 }
 
 .room-card:hover {
@@ -131,95 +133,45 @@ body {
 /* Button styles */
 .btn {
     display: inline-block;
-    padding: 12px 24px; /* Increased padding for better size */
+    padding: 12px 24px;
     color: #fff;
     text-align: center;
     border: none;
-    border-radius: 8px; /* Slightly rounder edges */
+    border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     text-decoration: none;
     font-size: 1rem;
     font-weight: 600;
-    letter-spacing: 1px; /* Added letter spacing for better readability */
+    letter-spacing: 1px;
 }
 
 .book-btn {
-    background-color: #ec407a; /* Pink */
+    background-color: #ec407a;
 }
 
 .book-btn:hover {
-    background-color: #f06292; /* Light Pink */
-    transform: translateY(-3px); /* Slight lift effect */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow on hover */
+    background-color: #f06292;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .delete-btn {
-    background-color: #e53935; /* Red-Pink */
+    background-color: #e53935;
 }
 
 .delete-btn:hover {
-    background-color: #c62828; /* Darker Red-Pink */
-    transform: translateY(-3px); /* Slight lift effect */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow on hover */
+    background-color: #c62828;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .details-btn {
-    background-color: #05b814; /* Purple-Pink */
+    background-color: #05b814;
 }
 
 .details-btn:hover {
-    background-color: #2faa24; /* Darker Purple-Pink */
-    transform: translateY(-3px); /* Slight lift effect */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow on hover */
-}
-
-/* Rounded primary button */
-.primary-btn {
-    background-color: #f06292; /* Light Pink */
-    color: #fff;
-    padding: 12px 30px; /* Slightly larger padding */
-    border-radius: 25px; /* Fully rounded corners */
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.primary-btn:hover {
-    background-color: #ec407a; /* Darker Pink */
-    transform: translateY(-4px); /* Slight lift effect */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Stronger shadow on hover */
-}
-
-/* Flat button style */
-.flat-btn {
-    background-color: transparent;
-    border: 2px solid #f06292; /* Pink border */
-    color: #f06292; /* Pink text */
-    padding: 12px 30px;
-    border-radius: 25px;
-    transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
-}
-
-.flat-btn:hover {
-    background-color: #f06292; /* Pink background on hover */
-    color: #fff; /* White text on hover */
-    transform: translateY(-3px); /* Slight lift effect */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow on hover */
-}
-
-/* Secondary Button */
-.secondary-btn {
-    background-color: #f8bbd0; /* Soft Pink */
-    color: #f06292; /* Dark Pink */
-    padding: 12px 30px;
-    border-radius: 25px;
-    font-size: 1rem;
-    border: none;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.secondary-btn:hover {
-    background-color: #f06292; /* Darker Pink */
-    color: white;
+    background-color: #2faa24;
     transform: translateY(-3px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
@@ -233,11 +185,11 @@ body {
 }
 
 .room-status.booked {
-    background-color: #e53935; /* Red-Pink */
+    background-color: #e53935;
 }
 
 .room-status.available {
-    background-color: #ec407a; /* Pink */
+    background-color: #ec407a;
 }
 
 /* Responsive Styles */
@@ -247,23 +199,30 @@ body {
         font-size: 2rem;
         cursor: pointer;
         color: #fff;
-        z-index: 2;
+        z-index: 3;
+        
+         
+    }
+    
+    .btn{
+        font-weight: 500;
+        padding: 8px 16px;
     }
 
     .nav-links {
-        position: absolute;
+        position: fixed;
         top: 0;
         right: 0;
-        background: #ec407a; /* Pink */
+        background: #ec407a;
         flex-direction: column;
         align-items: flex-start;
         justify-content: space-around;
-        width: 100%; /* Full width */
-        height: 100vh; /* Full screen height */
+        width: 100%;
+        height: 100vh;
         transform: translateX(100%);
         transition: transform 0.3s ease-in-out;
-        z-index: 1;
-        padding-top: 60px; /* Space for the navbar */
+        z-index: 2;
+        padding-top: 60px;
     }
 
     .nav-links.active {
@@ -274,8 +233,8 @@ body {
         padding: 20px;
         width: 100%;
         text-align: center;
-        font-size: 1.2rem; /* Larger font for readability */
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Divider for each link */
+        font-size: 1.2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .nav-links li a {
@@ -288,51 +247,8 @@ body {
     }
 
     .nav-links li a:hover {
-        color: #f06292; /* Light Pink on hover */
+        color: #f06292;
     }
-
-    .menu-icon {
-        position: absolute;
-        top: 20px;
-        right: 20px; /* Positioned at the top-right */
-        z-index: 2;
-    }
-
-    /* Optional close icon */
-/* Close menu button for mobile view */
-.close-menu {
-    display: none; /* Hidden by default */
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 2rem;
-    color: #fff;
-    cursor: pointer;
-    z-index: 2;
-}
-
-/* Display close icon when nav menu is active */
-.nav-links.active + .close-menu {
-    display: block;
-}
-
-    /* Overlay for dark background */
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 0;
-        display: none;
-    }
-
-    .overlay.active {
-        display: block;
-    }
- 
-
 
     .cards {
         flex-direction: column;
@@ -341,11 +257,11 @@ body {
     .room-card {
         width: 100%;
     }
-}
+} 
 
 /* Footer Styles */
 footer {
-    background-image: linear-gradient(-20deg, #ec407a 0%, #f48fb1 100%); /* Pink Gradient */
+    background-image: linear-gradient(-20deg, #ec407a 0%, #f48fb1 100%);
     color: #ffffff;
     font-weight: 600;
     text-align: center;

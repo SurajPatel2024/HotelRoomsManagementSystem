@@ -36,6 +36,8 @@
 
         <div class="cards">
             <div class="card">
+                <i class="fas fa-calculator" style="font-size: 20px; color: #ffffff;"></i>
+              
                 <h3>Total Rooms</h3>
                 <p>
                     <% if (hotel) { %>
@@ -47,15 +49,17 @@
                 
             </div>
             <div class="card">
-                <h3 ">Available Rooms</h3>
+                <i class="fas fa-hotel" style="font-size: 20px; color: #ffffff;"></i>
+                <h3>Available Rooms</h3>
                 <p><%= availableRooms %></p>
             </div>
             <div class="card">
-                <h3 >Booked Rooms</h3>
+                <i style="font-size: 20px; color: #ffffff;" class="fas fa-bed"></i>
+                <h3 > Booked Rooms</h3>
                 <p><%= bookedRooms %></p>
             </div>
         </div>
-
+   
         <h2>Room Status</h2>
         <div class="room-grid">
             <% rooms.forEach(room => { %>
@@ -72,11 +76,14 @@
 
                     <form action="/delete-room" method="POST">
                         <input type="hidden" name="roomNumber" value="<%= room.roomNumber %>">
-                        <button class="btn delete-btn" type="submit">Delete Room</button>
+                        <button class="btn delete-btn" type="submit">  <i class="fas fa-trash" style="font-size: 18px; color: #ffffff;"></i> Delete Room</button>
                         <% if (room.booking) { %>
-                            <a href="/view-booking/<%= room.booking._id %>" class="btn details-btn">View Details</a>
+                          
+
+                            <a href="/view-booking/<%= room.booking._id %>" class="btn details-btn">  <i class="fas fa-eye" style="font-size: 18px; color: #ffffff;"></i> View Details</a>
                         <% } else { %>
-                            <a href="/book-room" class="btn book-btn">Book Now</a>
+                            <a href="/book-room" class="btn book-btn">
+                                 <i class="fas fa-shopping-cart" style="font-size: 20px; color: #ffffff;"></i> Book Now</a>
                         <% } %>
                     </form>
                 </div>
