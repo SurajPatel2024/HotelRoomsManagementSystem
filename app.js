@@ -16,6 +16,7 @@ connectDB();
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 const MongoStore = require('connect-mongo');
+const { error } = require("console");
 
 app.use(session({
     secret: process.env.SESSION_SECRET || 'your-secret-key',
@@ -29,51 +30,72 @@ app.use(express.static('public'));
 
 // Render login page
 app.get('/', (req, res) => {
-    res.render('login');
+    res.render('login', { error: null });
 });
 
 // Signup page route
 app.get('/signup', (req, res) => {
-    res.render('signup');
+    res.render('signup',{error: null});
 });
 
 // Handle signup
 app.post('/signup', async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password ,school} = req.body;
 
     const existingUser = await User.findOne({ name: username });
     if (existingUser) {
-        return res.send("User already exists. Please choose a different username.");
+        return res.render('signup',{error:'User already exists. Please choose a different username.'})
     }
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const newUser = new User({ name: username, password: hashedPassword });
+    const newUser = new User({ name: username, password: hashedPassword ,school});
     await newUser.save();
     res.redirect('/');
 });
 
-// Handle login
-app.post('/home', async (req, res) => {
-    const { username, password } = req.body;
+//reset password
+app.get('/forgot', (req, res) => {
+    res.render('forgot',{error:null});  
+});
+app.post('/forgot', async(req, res) => {
+    const { username, newPassword , school } = req.body;
+ 
     try {
-        const user = await User.findOne({ name: username });
+        // Find the user by name and school
+        const user = await User.findOne({ name:username, school });
         if (!user) {
-            return res.send("Username not found.");
+            return res.render('forgot',{error:'User not found or incorrect school information.'})
+           
         }
+ 
+        // Hash the new password
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
 
-        const isPasswordMatch = await bcrypt.compare(password, user.password);
-        if (isPasswordMatch) {
-            req.session.user = user;
-            res.redirect('/home');
-        } else {
-            res.send("Wrong password.");
-        }
+        // Update the user's password
+        user.password = hashedPassword;
+        await user.save();
+        res.render('login',{error:'Password has been successfully updated. Please log in with your new password.'})
+         
     } catch (error) {
-        res.send("Something went wrong. Please try again.");
+        console.error('Error in forget route:', error);
+        res.send('An error occurred. Please try again later.');
     }
 });
+  
+// Handle login 
+ 
+app.post('/home', async (req, res) => {
+    const { username, password } = req.body;
+      const user = await User.findOne({name: username});
+      if(!user || ! await bcrypt.compare(password,user.password)){
+        return res.render('login',{error:"Username or password is wrong!"})
+      }
+      req.session.user = user;
+      res.redirect('/home'); 
+}); 
 
 // Check if the user is logged in
 function isAuthenticated(req, res, next) {

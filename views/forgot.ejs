@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Forgot Password</title>
     <link rel="stylesheet" href="./css/alert.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         /* Global Styles */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
@@ -18,31 +18,28 @@
         }
 
         body {
-            background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%);
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             color: #333;
-            padding: 20px;
         }
 
         .form-container {
             background: rgba(255, 255, 255, 0.9);
             padding: 40px 30px;
-            border-radius: 20px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
             text-align: center;
-            width: 100%;
-            max-width: 400px;
+            width: 350px;
             animation: fadeIn 1s ease-in-out;
         }
 
         .form-container h2 {
             font-weight: 600;
             color: #333;
-            margin-bottom: 30px;
-            font-size: 28px;
+            margin-bottom: 20px;
         }
 
         .form-group {
@@ -52,27 +49,25 @@
 
         .form-group label {
             font-size: 14px;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             display: block;
             font-weight: 500;
-            color: #555;
         }
 
         .form-group input {
             width: 100%;
-            padding: 14px 20px;
-            font-size: 16px;
+            padding: 12px 15px 12px 40px;
+            font-size: 14px;
             border: 1px solid #ddd;
-            border-radius: 30px;
+            border-radius: 25px;
             outline: none;
             transition: 0.3s;
             background: #f9f9f9;
-            padding-left: 40px;
         }
 
         .form-group input:focus {
-            border-color: #ff7eb3;
-            box-shadow: 0 0 8px rgba(255, 126, 179, 0.3);
+            border-color: #6a11cb;
+            box-shadow: 0 0 8px rgba(106, 17, 203, 0.3);
             background: #fff;
         }
 
@@ -82,25 +77,56 @@
             top: 50%;
             transform: translateY(-50%);
             color: #aaa;
-            font-size: 18px;
+            font-size: 16px;
         }
 
         .submit-btn {
-            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             color: #fff;
             border: none;
-            padding: 14px 20px;
-            border-radius: 30px;
-            font-size: 16px;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 14px;
             cursor: pointer;
             transition: 0.3s;
             width: 100%;
-            text-transform: uppercase;
         }
 
         .submit-btn:hover {
-            background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%);
-            box-shadow: 0 8px 15px rgba(255, 126, 179, 0.3);
+            background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+            box-shadow: 0 8px 15px rgba(106, 17, 203, 0.3);
+        }
+
+        .forgot-password {
+            margin-top: 10px;
+        }
+
+        .forgot-password a {
+            color: #6a11cb;
+            font-size: 14px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .forgot-password a:hover {
+            color: #2575fc;
+        }
+
+        p {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        p a {
+            color: #6a11cb;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        p a:hover {
+            color: #2575fc;
         }
 
         @keyframes fadeIn {
@@ -108,44 +134,35 @@
                 opacity: 0;
                 transform: translateY(-10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        /* Mobile responsiveness */
-        @media (max-width: 600px) {
-            .form-container {
-                padding: 30px 20px;
-            }
-            .form-container h2 {
-                font-size: 24px;
-            }
-            .form-group input {
-                font-size: 14px;
-            }
-        }
+
+     
     </style>
 </head>
 <body>
     <div class="form-container">
-        <h2>Signup</h2>
+        <h2>Forgot Password</h2>
         <% if (error) { %>
             <div class="alert">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                 <%= error %>
             </div>
             <% } %>
-        <form action="/signup" method="post">
+        <form action="/forgot" method="post">
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="username" placeholder="Enter your name" required autocomplete="off">
                 <i class="fas fa-user"></i>
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <label for="password">New Password</label>
+                <input type="password" id="password" name="newPassword" placeholder="Enter New password" required>
                 <i class="fas fa-lock"></i>
             </div>
             <div class="form-group">
@@ -153,7 +170,7 @@
                 <input type="text" id="school" name="school" placeholder="Enter your school name" required autocomplete="off">
                 <i class="fas fa-school"></i>
             </div>
-            <button type="submit" class="submit-btn">Signup</button>
+            <button type="submit" class="submit-btn">Submit</button>
         </form>
     </div>
 </body>
