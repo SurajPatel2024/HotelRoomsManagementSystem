@@ -149,7 +149,7 @@
     <div class="form-container">
         <h2>Forgot Password</h2>
         <% if (error) { %>
-            <div class="alert">
+            <div class="alert <%= errorType %>">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                 <%= error %>
             </div>
@@ -166,9 +166,9 @@
                 <i class="fas fa-lock"></i>
             </div>
             <div class="form-group">
-                <label for="school">Primary School Name</label>
-                <input type="text" id="school" name="school" placeholder="Enter your school name" required autocomplete="off">
-                <i class="fas fa-school"></i>
+                <label for="email">Email </label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required autocomplete="off">
+                <i class="fas fa-envelope"></i>
             </div>
             <button type="submit" class="submit-btn">Submit</button>
         </form>

@@ -33,9 +33,10 @@
             border-radius: 15px;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
             text-align: center;
-            width: 350px;
+            width: 100%;
+            max-width: 400px;
             animation: fadeIn 1s ease-in-out;
-            max-width: 90%;
+          
         }
 
         .form-container h2 {
@@ -189,7 +190,7 @@
 
         <!-- Alert for Error -->
         <% if (error) { %>
-        <div class="alert">
+        <div class="alert <%= errorType %>">
             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
             <%= error %>
         </div>

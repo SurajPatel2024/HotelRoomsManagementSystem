@@ -23,7 +23,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({ mongoUrl: process.env.DATABASE_URL })
-}));
+})); 
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -40,7 +40,7 @@ app.get('/signup', (req, res) => {
 
 // Handle signup
 app.post('/signup', async (req, res) => {
-    const { username, password ,school} = req.body;
+    const { username, password ,email} = req.body;
 
     const existingUser = await User.findOne({ name: username });
     if (existingUser) {
@@ -50,7 +50,7 @@ app.post('/signup', async (req, res) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const newUser = new User({ name: username, password: hashedPassword ,school});
+    const newUser = new User({ name: username, password: hashedPassword ,email});
     await newUser.save();
     res.redirect('/');
 });
@@ -60,13 +60,13 @@ app.get('/forgot', (req, res) => {
     res.render('forgot',{error:null});  
 });
 app.post('/forgot', async(req, res) => {
-    const { username, newPassword , school } = req.body;
+    const { username, newPassword , email } = req.body;
  
     try {
         // Find the user by name and school
-        const user = await User.findOne({ name:username, school });
+        const user = await User.findOne({ name:username, email });
         if (!user) {
-            return res.render('forgot',{error:'User not found or incorrect school information.'})
+            return res.render('forgot',{error:'User not found or incorrect email information.'})
            
         }
  
@@ -77,7 +77,7 @@ app.post('/forgot', async(req, res) => {
         // Update the user's password
         user.password = hashedPassword;
         await user.save();
-        res.render('login',{error:'Password has been successfully updated. Please log in with your new password.'})
+        res.render('login',{error:'Password has been successfully updated. Please log in with your new password.', errorType: 'Sucess'})
          
     } catch (error) {
         console.error('Error in forget route:', error);
