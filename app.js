@@ -70,7 +70,11 @@ app.post('/signup', async (req, res) => {
 
 //reset password
 app.get('/forgot', (req, res) => {
-    res.render('forgot',{error:null});  
+    res.render('forgot',{
+        message: '',
+        messageType: ''  
+    })
+    
 });
 app.post('/forgot', async(req, res) => {
     const { username, newPassword , email } = req.body;
