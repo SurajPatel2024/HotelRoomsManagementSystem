@@ -131,12 +131,9 @@
 <body>
     <div class="form-container">
         <h2>Signup</h2>
-        <% if (error) { %>
-            <div class="alert <%= errorType %>">
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                <%= error %>
-            </div>
-            <% } %>
+        <% if (message) { %>
+            <div class="message <%= messageType %>"><%= message %></div>
+        <% } %>
         <form action="/signup" method="post">
             <div class="form-group">
                 <label for="name">Name</label>

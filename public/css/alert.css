@@ -1,48 +1,22 @@
-.alert {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 15px;
+.message {
+    font-size: 14px;
     margin-bottom: 20px;
-    border: 1px solid #f5c6cb;
-    border-radius: 4px;
-    position: relative;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
 }
-
-.alert .closebtn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: #721c24;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.alert .closebtn:hover {
-    color: #000;
-}
-.Sucess {
-    background-color: #d4edda;  /* Light green for success */
-    color: #155724;
-    padding: 15px;
-    margin-bottom: 20px;
+.message.success {
+    color: #28a745; /* Green for success */
+    background-color: #d4edda;
     border: 1px solid #c3e6cb;
-    border-radius: 4px;
-    position: relative;
 }
-
-.Sucess .closebtn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: #155724;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
+.message.error {
+    color: #dc3545; /* Red for error */
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
 }
-
-.Sucess .closebtn:hover {
-    color: #000;
+.message.info {
+    color: #17a2b8; /* Blue for info */
+    background-color: #d1ecf1;
+    border: 1px solid #bee5eb;
 }

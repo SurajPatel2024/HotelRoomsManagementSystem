@@ -30,21 +30,34 @@ app.use(express.static('public'));
 
 // Render login page
 app.get('/', (req, res) => {
-    res.render('login', { error: null });
+    res.render('login', {
+        message: '',
+        messageType: '' // Specify the type of the message
+    });
 });
 
+ 
 // Signup page route
-app.get('/signup', (req, res) => {
-    res.render('signup',{error: null});
-});
-
+app.get('/signup', (req, res) => { 
+    res.render('signup', {
+        message: ' ',
+        messageType: ' '  
+    });
+   
+}); 
+ 
 // Handle signup
 app.post('/signup', async (req, res) => {
     const { username, password ,email} = req.body;
 
     const existingUser = await User.findOne({ name: username });
     if (existingUser) {
-        return res.render('signup',{error:'User already exists. Please choose a different username.'})
+        return res.render('signup', {
+            message: 'Username already exists!',
+            messageType: 'error'  
+        });
+       
+         
     }
 
     const saltRounds = 10;
@@ -66,7 +79,10 @@ app.post('/forgot', async(req, res) => {
         // Find the user by name and school
         const user = await User.findOne({ name:username, email });
         if (!user) {
-            return res.render('forgot',{error:'User not found or incorrect email information.'})
+            return res.render('forgot',{
+                message: 'Username or Email is wrong?',
+                messageType: 'error'  
+            })
            
         }
  
@@ -77,7 +93,11 @@ app.post('/forgot', async(req, res) => {
         // Update the user's password
         user.password = hashedPassword;
         await user.save();
-        res.render('login',{error:'Password has been successfully updated. Please log in with your new password.', errorType: 'Sucess'})
+        res.render('login', {
+            message: 'Password has been successfully updated. Please log in with your new password.',
+            messageType: 'success' // Specify the type of the message
+        });
+        
          
     } catch (error) {
         console.error('Error in forget route:', error);
@@ -85,18 +105,72 @@ app.post('/forgot', async(req, res) => {
     }
 });
   
+// Route to render room edit form
+app.get('/edit-room/:roomNumber', isAuthenticated, async (req, res) => {
+    const roomNumber = req.params.roomNumber;
+
+    try {
+        // Fetch the room by room number and user ID
+        const room = await Room.findOne({ roomNumber, userId: req.session.user._id });
+        if (!room) {
+            return res.status(404).send('Room not found');
+        }
+
+        // Render the edit form with the room details
+        res.render('edit-room', { room });
+    } catch (error) {
+        console.error('Error retrieving room:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Handle room edit submission
+app.post('/edit-room/:roomNumber', isAuthenticated, async (req, res) => {
+    const roomNumber = req.params.roomNumber;
+    const { status, price } = req.body;
+
+    try {
+        // Find the room by room number and user ID
+        const room = await Room.findOne({ roomNumber, userId: req.session.user._id });
+        if (!room) {
+            return res.status(404).send('Room not found');
+        }
+
+        // Update the room details
+        room.status = status;
+        room.price = price;
+        
+        await room.save();
+
+        // Redirect to the home page after updating the room
+        res.redirect('/home');
+    } catch (error) {
+        console.error('Error updating room:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
 // Handle login 
  
 app.post('/home', async (req, res) => {
     const { username, password } = req.body;
-      const user = await User.findOne({name: username});
-      if(!user || ! await bcrypt.compare(password,user.password)){
-        return res.render('login',{error:"Username or password is wrong!"})
-      }
-      req.session.user = user;
-      res.redirect('/home'); 
-}); 
+    const user = await User.findOne({ name: username });
+    
+    if (!user || !await bcrypt.compare(password, user.password)) {
+        return res.render('login', {
+            message: 'Invalid username or password!',
+            messageType: 'error' // Specify the type of the message
+        });
+        
+    }
+     
+    req.session.user = user;
+    res.redirect('/home');
+});
 
+ 
 // Check if the user is logged in
 function isAuthenticated(req, res, next) {
     if (req.session.user) {
@@ -212,7 +286,7 @@ app.get('/room/:roomNumber', async (req, res) => {
     }
 });
 
-// Assuming you have express and your booking model imported
+ 
 // View booking details route
 app.get('/view-booking/:id', isAuthenticated, async (req, res) => {
     try {
@@ -234,7 +308,7 @@ app.post('/book-room', isAuthenticated, async (req, res) => {
 
     // Find the room by the provided room number
     const room = await Room.findOne({ roomNumber, userId: req.session.user._id });
-
+ 
     if (!room || room.status !== 'Available') {
         return res.status(404).send('Room not found or not available for booking.');
     }

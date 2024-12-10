@@ -182,18 +182,40 @@
             }
         }
     </style>
+
+<style>
+    /* Message styles */
+    .message {
+        font-size: 14px;
+        margin-bottom: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+    }
+    .message.success {
+        color: #28a745; /* Green for success */
+        background-color: #d4edda;
+        border: 1px solid #c3e6cb;
+    }
+    .message.error {
+        color: #dc3545; /* Red for error */
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+    }
+    .message.info {
+        color: #17a2b8; /* Blue for info */
+        background-color: #d1ecf1;
+        border: 1px solid #bee5eb;
+    }
+</style>
 </head>
 
 <body>
     <div class="form-container">
         <h2>Login</h2>
 
-        <!-- Alert for Error -->
-        <% if (error) { %>
-        <div class="alert <%= errorType %>">
-            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-            <%= error %>
-        </div>
+        <% if (message) { %>
+            <div class="message <%= messageType %>"><%= message %></div>
         <% } %>
 
         <form action="/home" method="post">

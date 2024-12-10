@@ -147,14 +147,12 @@
 </head>
 <body>
     <div class="form-container">
-    
+ 
         <h2>Forgot Password</h2>
-        <% if (error) { %>
-            <div class="alert <%= errorType %>">
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                <%= error %>
-            </div>
-            <% } %>
+    
+        <% if (message) { %>
+            <div class="message <%= messageType %>"><%= message %></div>
+        <% } %> 
         <form action="/forgot" method="post">
             <div class="form-group">
                 <label for="name">Name</label>
