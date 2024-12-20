@@ -4,151 +4,150 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Rooms</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-align: center;
+            padding: 10px 15px;
+            background-image: linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #45a049;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 24px;
+        }
+
+        form {
+            background-color: #fff;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+            display: block;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-image: linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #paymentStatus {
+            padding: 12px;
+        }
+
+        @media (max-width: 768px) {
+            form {
+                width: 100%;
+                padding: 20px;
+            }
+
+            input,
+            button {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            input,
+            button {
+                font-size: 13px;
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
- <style>
-    * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    background-color: #f4f4f4;
-}
-
-a {
-    display: inline-block;
-    margin-top: 20px;
-    text-align: center;
-    padding: 10px 15px;
-  
-    background-image: linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%);
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-a:hover {
-    background-color: #45a049;
-}
-
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-    font-size: 24px;
-}
-
-form {
-    background-color: #fff;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
-
-label {
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555;
-    display: block;
-}
-
-input,
-select {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-button {
-    width: 100%;
-    padding: 12px;
-     
-    background-image: linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%);
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #218838;
-}
-
-#paymentStatus {
-    padding: 12px; /* Ensure padding for the select box */
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    form {
-        width: 100%;
-        padding: 20px;
-    }
-
-    input,
-    button {
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 480px) {
-    input,
-    button {
-        font-size: 13px;
-        padding: 10px;
-    }
-}
-
- </style>
-
 <body>
-   <a href="/Home">Back</a>
-   <!-- Booking form to book a specific room -->
-<h2>Book a Room</h2>
-<form action="/book-room" method="POST">
-    <label for="guestName">Guest Name:</label>
-    <input type="text" name="guestName" required><br>
+    <a href="/Home">Back</a>
+    <h2>Book a Room</h2>
+    <form action="/book-room" method="POST">
+        <label for="guestName">Guest Name:</label>
+        <input type="text" name="guestName" required><br>
 
-    <label for="guestMobile">Guest Mobile:</label>
-    <input type="text" name="guestMobile" required minlength="10" ><br>
+        <label for="guestMobile">Guest Mobile:</label>
+        <input type="text" name="guestMobile" required minlength="10" ><br>
 
-    <label for="roomNumber">Room Number:</label>
-    <input type="number" name="roomNumber" required><br>
+        <label for="roomNumber">Room Number:</label>
+        <input type="number" name="roomNumber" required><br>
 
-    <label for="checkIn">Check In:</label>
-    <input type="date" name="checkIn" required><br>
+        <label for="checkIn">Check In:</label>
+        <input type="date" name="checkIn" required><br>
 
-    <label for="checkOut">Check Out:</label>
-    <input type="date" name="checkOut" required><br>
+        <label for="checkOut">Check Out:</label>
+        <input type="date" name="checkOut" required><br>
 
-    <label for="guestCount">Guest Count:</label>
-    <input type="number" name="guestCount" required><br>
+        <label for="guestCount">Guest Count:</label>
+        <input type="number" name="guestCount" required><br>
 
-    <label for="roomprice">Room Price:</label> 
-    <input type="number" name="roomprice" required><br>
+        <label for="roomprice">Room Price:</label> 
+        <input type="number" name="roomprice" required><br>
 
-    <label for="paymentStatus">Payment Status:</label>
-    <select name="paymentStatus" id="paymentStatus">
-        <option value="Unpaid">Unpaid</option>
-        <option value="Paid">Paid</option>
-       
-    </select>
-    
+        <label for="paymentStatus">Payment Status:</label>
+        <select name="paymentStatus" id="paymentStatus">
+            <option value="Unpaid">Unpaid</option>
+            <option value="Paid">Paid</option>
+        </select>
 
-    <button type="submit">Book Room</button>
-</form>
+        <button type="submit">Book Room</button>
+    </form>
 
-    
+    <script>
+        // Get today's date in the format 'YYYY-MM-DD'
+        const today = new Date().toISOString().split('T')[0];
+
+        // Set the min attribute for check-in and check-out date inputs
+        document.querySelector('input[name="checkIn"]').setAttribute('min', today);
+        document.querySelector('input[name="checkOut"]').setAttribute('min', today);
+    </script>
 </body>
 </html>

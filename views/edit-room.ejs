@@ -209,11 +209,7 @@
                 <option value="Available" <% if (room.status==='Available' ) { %>selected<% } %>>Available</option>
                 <option value="Booked" <% if (room.status==='Booked' ) { %>selected<% } %>>Booked</option>
             </select>
-
-            <label for="roomprice">Room Price:</label>
-            <input type="number" name="roomprice" value="<%= room.roomprice %>" required>
-
-
+ 
             <button type="submit">Save Changes</button>
         </form>
     </main>
