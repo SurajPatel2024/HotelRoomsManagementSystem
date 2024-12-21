@@ -71,13 +71,18 @@
             <% rooms.forEach(room => { %>
                 <div class="room-card">
                     <h3>Room <%= room.roomNumber %></h3>
-                    <p>Status: <%= room.status %></p>
-
+                    <p style="font-weight: 600; color: #FFB302; font-size: 20px;">Status: 
+                    <% if (room.status == 'Booked') { %>
+                        <span style="color: red;"> <%= room.status %></span>
+                    <% } else { %>
+                        <span style="color: rgb(9, 177, 4);"><%= room.status %></span>
+                    <% } %>
+                </p>
                     <% if (room.booking && room.status == 'Booked') { %>
                         <p><strong>Check-In:</strong> <%= room.booking.checkIn.toDateString() %></p>
                         <p><strong>Check-Out:</strong> <%= room.booking.checkOut.toDateString() %></p>
                     <% } else { %>
-                        <p>No booking data available.</p>
+                        <p style="color: red;">No booking data available.</p>
                     <% } %>
 
                     <form action="/delete-room" method="POST">

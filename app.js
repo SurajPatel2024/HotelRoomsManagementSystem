@@ -48,26 +48,55 @@ app.get('/signup', (req, res) => {
  
 // Handle signup
 app.post('/signup', async (req, res) => {
-    const { username, password ,email} = req.body;
+    const { username, password, email } = req.body;
 
-    const existingUser = await User.findOne({ name: username });
-    if (existingUser) {
-        return res.render('signup', {
-            message: 'Username already exists!',
-            messageType: 'error'  
+    try {
+        // Validate username
+        const usernameRegex = /^[a-zA-Z]+$/;
+        if (!usernameRegex.test(username)) {
+            return res.render('signup', {
+                message: 'Username can only contain alphabetic characters!',
+                messageType: 'error',
+            });
+        }
+
+        // Validate email (only .com domains)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.com$/;
+        if (!emailRegex.test(email)) {
+            return res.render('signup', {
+                message: 'Email must be a valid .com domain!',
+                messageType: 'error',
+            });
+        }
+
+        // Check if username or email already exists
+        const existingUser = await User.findOne({ $or: [{ name: username }, { email }] });
+        if (existingUser) {
+            return res.render('signup', {
+                message: existingUser.email === email 
+                    ? 'Email already exists!' 
+                    : 'Username already exists!',
+                messageType: 'error',
+            });
+        }
+
+        // Hash password and save user
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        const newUser = new User({ name: username, password: hashedPassword, email });
+        await newUser.save();
+
+        res.redirect('/');
+    } catch (error) {
+        console.error('Error during signup:', error);
+        res.render('signup', {
+            message: 'An error occurred during signup. Please try again later.',
+            messageType: 'error',
         });
-       
-         
     }
-
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-    const newUser = new User({ name: username, password: hashedPassword ,email});
-    await newUser.save();
-    res.redirect('/');
 });
-
+ 
 //reset password
 app.get('/forgot', (req, res) => {
     res.render('forgot',{

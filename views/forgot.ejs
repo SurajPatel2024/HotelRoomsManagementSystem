@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password</title>
+    <title>Reset Password</title>
     <link rel="stylesheet" href="./css/alert.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
@@ -16,6 +16,11 @@
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
         }
+        .message.error {
+        color: #dc3545; /* Red for error */
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+    }
 
         body {
             background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
@@ -148,7 +153,7 @@
 <body>
     <div class="form-container">
  
-        <h2>Forgot Password</h2>
+        <h2>Reset Your Password</h2>
     
         <% if (message) { %>
             <div class="message <%= messageType %>"><%= message %></div>

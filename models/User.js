@@ -13,10 +13,10 @@ const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, 'Email is required'],
-        unique: true,  // Ensure email is unique
-        lowercase: true,  // Convert email to lowercase
-        match: [/\S+@\S+\.\S+/, 'Please enter a valid email address'], // Email validation regex
-      },
+        unique: true,
+        lowercase: true,
+        match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Please enter a valid email address'], // Validates the email format
+    },
 });
 
 module.exports = mongoose.model('User', UserSchema);
