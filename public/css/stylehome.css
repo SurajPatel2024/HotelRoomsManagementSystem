@@ -17,14 +17,16 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #e91e63; /* Fallback */
-    background-image: linear-gradient(-20deg, #e91e63 0%, #f06292 100%);
+  
+    background: rgb(255,0,18);
+background: linear-gradient(97deg, rgba(255,0,18,1) 5%, rgba(224,4,98,1) 28%, rgba(195,7,175,1) 39%, rgba(171,10,238,1) 66%, rgba(0,212,255,1) 100%);
     padding: 10px 20px;
-    transition: background-color 0.3s ease;
+    transition: background 0.5s ease; /* Smooth transition */
 }
 
 .navbar:hover {
-    background-image: linear-gradient(-20deg, #f06292 0%, #e91e63 100%);
+    background: rgb(255,0,18);
+    background: linear-gradient(97deg, rgba(0,212,255,1)  5%,rgba(171,10,238,1) 28%, rgba(195,7,175,1) 39%,  rgba(224,4,98,1)  66%, rgba(255,0,18,1)100%);
 }
 
 .navbar .logo h1 {
@@ -85,7 +87,8 @@ body {
 }
 
 .card {
-    background-image: linear-gradient(-20deg, #ec407a 0%, #f48fb1 100%); /* Pink Gradient */
+    background: rgb(255,0,18);
+    background: linear-gradient(97deg, rgba(255,0,18,1) 5%, rgba(224,4,98,1) 28%, rgba(195,7,175,1) 39%, rgba(171,10,238,1) 66%, rgba(0,212,255,1) 100%);
     color: white;
     padding: 20px;
     flex: 1;
@@ -99,6 +102,8 @@ body {
 .card:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    background: rgb(255,0,18);
+    background: linear-gradient(97deg, rgba(0,212,255,1)  5%,rgba(171,10,238,1) 28%, rgba(195,7,175,1) 39%,  rgba(224,4,98,1)  66%, rgba(255,0,18,1)100%);
 }
 
 /* Room grid */
@@ -107,10 +112,11 @@ body {
     flex-wrap: wrap;
     gap: 20px;
     justify-content: space-between;
+   
 }
 
 .room-card {
-    background: linear-gradient(60deg, #f06292 0%, #f8bbd0 100%);
+  
     background-image: url('https://img.freepik.com/premium-photo/choosing-booking-hotel-online_1029469-273009.jpg');
     background-position: right;
     background-size: 200px;
@@ -122,6 +128,7 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
     opacity: 0.9;
     background-blend-mode: overlay;
+    
 }
 
 .room-card:hover {
@@ -226,7 +233,10 @@ body {
         position: fixed;
         top: 0;
         right: 0;
-        background: #ec407a;
+      
+        background: rgb(255,0,18);
+        background: linear-gradient(97deg, rgba(255,0,18,1) 5%, rgba(224,4,98,1) 28%, rgba(195,7,175,1) 39%, rgba(171,10,238,1) 66%, rgba(0,212,255,1) 100%);
+           
         flex-direction: column;
         align-items: flex-start;
         justify-content: space-around;
@@ -274,7 +284,8 @@ body {
 
 /* Footer Styles */
 footer {
-    background-image: linear-gradient(-20deg, #ec407a 0%, #f48fb1 100%);
+    background: rgb(255,0,18);
+    background: linear-gradient(97deg, rgba(255,0,18,1) 5%, rgba(224,4,98,1) 28%, rgba(195,7,175,1) 39%, rgba(171,10,238,1) 66%, rgba(0,212,255,1) 100%);
     color: #ffffff;
     font-weight: 600;
     text-align: center;
@@ -284,5 +295,6 @@ footer {
 }
 
 footer:hover {
-    background-image: linear-gradient(-20deg, #f48fb1 0%, #ec407a 100%);
+    background: rgb(255,0,18);
+    background: linear-gradient(97deg, rgba(0,212,255,1)  5%,rgba(171,10,238,1) 28%, rgba(195,7,175,1) 39%,  rgba(224,4,98,1)  66%, rgba(255,0,18,1)100%);
 }

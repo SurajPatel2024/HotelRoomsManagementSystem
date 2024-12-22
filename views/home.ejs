@@ -9,31 +9,57 @@
     
     <title>Hotel Rooms Management System</title>
     <style>
-        /* Popup message styles */
-        #alert {
-            display: none;
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #4CAF50; /* Green for success */
-            color: white;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1000; /* Ensure it appears above other content */
-            opacity: 0;
-            width: 100vw;
-            font-weight: 600;
-            transition: opacity 0.3s ease-in-out; /* Smooth fade-in and fade-out */
-        }
+        /* General alert styling */
+#alert {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50; /* Green for success */
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Ensure it appears above other content */
+    opacity: 0;
+    max-width: 90%; /* Responsive width */
+    font-weight: 600;
+    text-align: center;
+    transition: opacity 0.5s ease, transform 0.5s ease; /* Smooth animations */
+}
 
-        /* Success message style */
-        .success {
-            background-color: #4CAF50;
-        }
+/* Different types of messages */
+#alert.success {
+    background-color: #4CAF50;
+}
 
-        /* You can add other styles for different types of messages (e.g., error, warning) */
+#alert.error {
+    background-color: #F44336; /* Red for error */
+}
+
+#alert.warning {
+    background-color: #FFC107; /* Yellow for warning */
+}
+
+#alert.info {
+    background-color: #2196F3; /* Blue for information */
+}
+
+/* Show alert with animation */
+#alert.show {
+    display: block;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0); /* Slight slide effect */
+}
+
+/* Hide alert after animation ends */
+#alert.hide {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px); /* Fade out and slide up */
+}
+
+       
     </style>
 </head>
 <body>
@@ -98,8 +124,8 @@
                     <% } %>
                 </p>
                     <% if (room.booking && room.status == 'Booked') { %>
-                        <p><strong>Check-In:</strong> <%= room.booking.checkIn.toDateString() %></p>
-                        <p><strong>Check-Out:</strong> <%= room.booking.checkOut.toDateString() %></p>
+                        <p><strong>Check-In:</strong><span style="color: #4CAF50; font-weight: 600;">  <%= room.booking.checkIn.toDateString() %></span> </p>
+                        <p><strong>Check-Out:</strong> <span style="color: #F44336; font-weight: 600;"> <%= room.booking.checkOut.toDateString() %></span></p>
                     <% } else { %>
                         <p style="color: red;">No booking data available.</p>
                     <% } %>
