@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Rooms</title>
+    <link rel="stylesheet" href="./css/alert.css">
     <style>
         * {
             box-sizing: border-box;
@@ -109,8 +110,13 @@
 </head>
 <body>
     <a href="/Home">Back</a>
+   
     <h2>Book a Room</h2>
+   
     <form action="/book-room" method="POST">
+        <% if (message) { %>
+            <div class="message <%= messageType %>"><%= message %></div>
+        <% } %>
         <label for="guestName">Guest Name:</label>
         <input type="text" name="guestName" required><br>
 

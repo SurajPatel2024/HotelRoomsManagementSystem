@@ -134,7 +134,7 @@
     <h1>Add Hotel Info</h1>
     <form action="/settings" method="POST">
         <label for="hotelname">Hotel Name:</label>
-        <input type="text" id="hotelname" name="hotelname" required>
+        <input type="text" id="hotelname" name="hotelname" value="<%= hotel || ' ' %>" required>
 
         <label for="totalRooms">Total Rooms:</label>
         <input type="number" id="totalRooms" name="totalRooms" min="1" required>

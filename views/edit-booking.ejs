@@ -4,117 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Booking</title>
-  <style>
-    /* Basic Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    padding: 20px;
-}
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
 
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-    font-size: 28px; /* Increased font size for better visibility */
-}
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 28px;
+        }
 
-form {
-    background-color: #fff;
-    padding: 30px; /* Increased padding for a more spacious look */
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 0 auto; /* Center the form */
-}
+        form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-label {
-    display: block;
-    margin-bottom: 8px;
-    color: #555;
-    font-weight: bold; /* Bold labels for better visibility */
-}
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
 
-input[type="text"],
-input[type="number"],
-input[type="date"],
-select {
-    width: 100%;
-    padding: 12px; /* Increased padding for input fields */
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-}
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
 
-button {
-    padding: 12px; /* Increased padding for the button */
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 16px;
-    width: 100%; /* Full width for the button */
-}
+        button {
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            width: 100%;
+        }
 
-button:hover {
-    background-color: #2980b9; /* Darker shade on hover */
-}
+        button:hover {
+            background-color: #2980b9;
+        }
 
-a {
-    display: inline-block;
-    margin-top: 20px;
-    text-align: center;
-    padding: 10px 15px;
-    background-color: #4CAF50;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-align: center;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
 
-a:hover {
-    background-color: #45a049;
-}
+        a:hover {
+            background-color: #45a049;
+        }
 
-/* Media Query for Responsiveness */
-@media (max-width: 768px) {
-    form {
-        padding: 20px; /* Adjust padding on smaller screens */
-    }
-}
+        /* Alert Styles */
+        .alert {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: none;
+            font-size: 16px;
+            width: 100%;
+            text-align: center;
+        }
 
-@media (max-width: 480px) {
-    h1 {
-        font-size: 24px; /* Smaller header font size on mobile */
-    }
+        .alert.success {
+            background-color: #4CAF50;
+            color: white;
+        }
 
-    button,
-    a {
-        font-size: 14px; /* Smaller font size for buttons on mobile */
-    }
+        .alert.error {
+            background-color: #f44336;
+            color: white;
+        }
 
-    input[type="text"],
-    input[type="number"],
-    input[type="date"],
-    select {
-        font-size: 14px; /* Smaller input font size on mobile */
-    }
-}
+        .alert.info {
+            background-color: #2196F3;
+            color: white;
+        }
 
-  </style>
+        .alert.warning {
+            background-color: #ff9800;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <h1>Edit Booking for Room <%= booking.roomNumber %></h1>
-    <form action="/edit-booking/<%= booking._id %>" method="POST">
+
+    <!-- Alert Messages -->
+    <div id="alertMessage" class="alert"></div>
+
+    <form action="/edit-booking/<%= booking._id %>" method="POST" onsubmit="return validateForm()">
         <label for="guestName">Guest Name:</label>
         <input type="text" id="guestName" name="guestName" value="<%= booking.guestName %>" required>
 
@@ -146,5 +155,53 @@ a:hover {
     </form>
 
     <a href="/bookings">Go Back</a>
+
+    <script>
+        // Function to get today's date in YYYY-MM-DD format
+        function getTodayDate() {
+            const today = new Date();
+            const day = String(today.getDate()).padStart(2, '0');
+            const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+            const year = today.getFullYear();
+            return `${year}-${month}-${day}`;
+        }
+
+        // Set today's date as the minimum value for Check-In and Check-Out fields
+        window.onload = function() {
+            const todayDate = getTodayDate();
+            document.getElementById('checkIn').setAttribute('min', todayDate);
+            document.getElementById('checkOut').setAttribute('min', todayDate);
+        };
+
+        // Validate Guest Name and Mobile Number
+        function validateForm() {
+            const guestName = document.getElementById('guestName').value;
+            const guestMobile = document.getElementById('guestMobile').value;
+
+            // Regular expression for validating Guest Name (only letters and spaces)
+            const nameRegex = /^[A-Za-z\s]+$/;
+            if (!nameRegex.test(guestName)) {
+                showAlert('Please enter a valid name (letters and spaces only).', 'error');
+                return false;
+            }
+
+            // Regular expression for validating Indian mobile number (10 digits, starting with 7, 8, 9)
+            const mobileRegex = /^[789]\d{9}$/;
+            if (!mobileRegex.test(guestMobile)) {
+                showAlert('Please enter a valid Indian mobile number.', 'error');
+                return false;
+            }
+
+            return true; // Allow form submission if validation passes
+        }
+
+        // Function to show alert message
+        function showAlert(message, type) {
+            const alertElement = document.getElementById('alertMessage');
+            alertElement.textContent = message;
+            alertElement.className = `alert ${type}`; // Add the appropriate class for the alert type
+            alertElement.style.display = 'block'; // Show the alert
+        }
+    </script>
 </body>
 </html>

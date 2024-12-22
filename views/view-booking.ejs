@@ -95,6 +95,16 @@ a:hover {
         font-size: 16px; /* Smaller text on small screens */
     }
 }
+/* Highlighted text color */
+.highlight-text {
+    color: rgb(1, 192, 103); /* Green color for emphasis */
+    font-weight: 600; /* Bold font weight */
+}
+
+/* Strong emphasis color */
+strong {
+    color: #FF5733; /* A warm red-orange color for strong text */
+}
 
      </style>
 </head>
@@ -102,13 +112,15 @@ a:hover {
     <div class="container">
         <h1>Booking Details for Room <%= booking.roomNumber %></h1>
         <div class="details">
-            <p><strong>Guest Name:</strong> <%= booking.guestName %></p>
-            <p><strong>Guest Mobile:</strong> <%= booking.guestMobile %></p>
-            <p><strong>Check-In Date:</strong> <%= booking.checkIn.toDateString() %></p>
-            <p><strong>Check-Out Date:</strong> <%= booking.checkOut.toDateString() %></p>
-            <p><strong>Number of Guests:</strong> <%= booking.guestCount %></p>
-            <p><strong>Total Price:</strong> <%= booking.roomprice %></p>
-            <p><strong>Payment Status:</strong> <%= booking.paymentStatus %></p>
+            <p><strong>Hotel Name:</strong> <span class="highlight-text"><%= hotel.hotelname %> Hotel</span></p>
+            <p><strong>Guest Name:</strong> <span class="highlight-text"><%= booking.guestName %></span></p>
+            <p><strong>Guest Mobile:</strong> <span class="highlight-text"><%= booking.guestMobile %></span></p>
+            <p><strong>Check-In Date:</strong> <span class="highlight-text"><%= booking.checkIn.toDateString() %></span></p>
+            <p><strong>Check-Out Date:</strong> <span class="highlight-text"><%= booking.checkOut.toDateString() %></span></p>
+            <p><strong>Number of Guests:</strong> <span class="highlight-text"><%= booking.guestCount %></span></p>
+            <p><strong>Total Price:</strong> <span class="highlight-text"><%= booking.roomprice %></span></p>
+            <p><strong>Payment Status:</strong> <span class="highlight-text"><%= booking.paymentStatus %></span></p>
+            
         </div>
         <a href="/bookings">Go Back</a>
         <button id="btn">Print</button>

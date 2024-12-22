@@ -4,12 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/stylehome.css">
-    
+    <link rel="stylesheet" href="./css/alert.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     
     <title>Hotel Rooms Management System</title>
+    <style>
+        /* Popup message styles */
+        #alert {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4CAF50; /* Green for success */
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000; /* Ensure it appears above other content */
+            opacity: 0;
+            width: 100vw;
+            font-weight: 600;
+            transition: opacity 0.3s ease-in-out; /* Smooth fade-in and fade-out */
+        }
 
- 
+        /* Success message style */
+        .success {
+            background-color: #4CAF50;
+        }
+
+        /* You can add other styles for different types of messages (e.g., error, warning) */
+    </style>
 </head>
 <body>
     <header>
@@ -22,28 +47,23 @@
                 <% } %>
             </div>
             <ul class="nav-links" id="navLinks">
-                <li><a href="/home"><i class="fas fa-home"></i> Dashboard</a>
+                <li><a href="/home"><i class="fas fa-home"></i> Dashboard</a></li>
                 <li><a href="/book-room"><i class="fas fa-bed"></i> Book Rooms</a></li>
                 <li><a href="/bookings"><i class="fas fa-calendar-check"></i> View Bookings</a></li>
                 <li><a href="/settings"><i class="fas fa-cogs"></i> Settings</a></li>
                 <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-              
             </ul>
-          
             <div class="menu-icon" onclick="toggleSidebar()">&#9776;</div>
         </nav>
     </header>
 
- 
- 
     <main class="main-content">
         <h1>Dashboard</h1>
-        <div class="date-time" id="dateTime"></div></li>
+        <div class="date-time" id="dateTime"></div>
 
         <div class="cards">
             <div class="card">
                 <i class="fas fa-calculator" style="font-size: 20px; color: #ffffff;"></i>
-              
                 <h3>Total Rooms</h3>
                 <p>
                     <% if (hotel) { %>
@@ -52,7 +72,6 @@
                         Not Added
                     <% } %>
                 </p>
-                
             </div>
             <div class="card">
                 <i class="fas fa-hotel" style="font-size: 20px; color: #ffffff;"></i>
@@ -87,17 +106,15 @@
 
                     <form action="/delete-room" method="POST">
                         <input type="hidden" name="roomNumber" value="<%= room.roomNumber %>">
-                        <button class="btn delete-btn" type="submit">  <i class="fas fa-trash" style="font-size: 18px; color: #ffffff;"></i> Delete Room</button>
+                        <button class="btn delete-btn" type="submit" onclick="delalert()">  <i class="fas fa-trash" style="font-size: 18px; color: #ffffff;"></i> Delete Room</button>
+                       
                         <% if (room.booking && room.status == 'Booked') { %>
-                          
-
                             <a href="/bookings" class="btn details-btn">  <i class="fas fa-eye" style="font-size: 18px; color: #ffffff;"></i> View Details</a>
                         <% } else { %>
                             <a href="/book-room" class="btn book-btn">
                                  <i class="fas fa-shopping-cart" style="font-size: 20px; color: #ffffff;"></i> Book Now</a>
                         <% } %>
 
-                           <!-- Edit Room Button -->
                     <a href="/edit-room/<%= room.roomNumber %>" class="btn details-btn" style="background-color:#008CBA" >
                         <i class="fas fa-edit" style="font-size: 20px; color: #ffffff;"></i> Edit Room
                     </a>
@@ -110,6 +127,10 @@
     <footer>
         <p>&copy; 2024 Hotel Rooms Management System. All rights reserved.</p>
     </footer>
+
+    <!-- Alert Div -->
+    <div id="alert" class="message success">Room is Deleted Successfully</div>
+
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -119,34 +140,47 @@
         document.querySelector('.menu-icon').addEventListener('click', () => {
             document.getElementById('navLinks').classList.toggle('active');
         });
+
+        function delalert() {
+            const alertElement = document.getElementById('alert');
+            
+            // Show the alert
+            alertElement.style.display = 'block';
+            alertElement.style.opacity = '1';  // Fade-in effect
+            
+            // Hide the alert after 5 seconds
+            setTimeout(function() {
+                alertElement.style.opacity = '0';  // Fade-out effect
+                setTimeout(function() {
+                    alertElement.style.display = 'none';  // Hide the alert completely after fade-out
+                }, 300);   
+            }, 6000);  
+        }
+
+        // Date and time update function (unchanged)
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            const formattedDate = now.toLocaleDateString('en-US', options);
+
+            let hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12; // Convert to 12-hour format
+
+            const formattedTime = `${hours}:${minutes}:${seconds} ${ampm}`;
+            document.getElementById('dateTime').textContent = `${formattedDate} | ${formattedTime}`;
+        }
+
+        // Update the date and time every second
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
     </script>
-
- <script>
-    function updateDateTime() {
-    const now = new Date();
-    const options = { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-    };
-    const formattedDate = now.toLocaleDateString('en-US', options);
-
-    let hours = now.getHours();
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    const seconds = now.getSeconds().toString().padStart(2, '0');
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12 || 12; // Convert to 12-hour format
-
-    const formattedTime = `${hours}:${minutes}:${seconds} ${ampm}`;
-    document.getElementById('dateTime').textContent = `${formattedDate} | ${formattedTime}`;
-}
-
-// Update the date and time every second
-setInterval(updateDateTime, 1000);
-updateDateTime();
-
- </script>
-     
 </body>
 </html>

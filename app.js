@@ -87,7 +87,10 @@ app.post('/signup', async (req, res) => {
         const newUser = new User({ name: username, password: hashedPassword, email });
         await newUser.save();
 
-        res.redirect('/');
+        res.render('login', {
+            message: 'Your Account Created Successfully!',
+            messageType: 'success' // Specify the type of the message
+        });
     } catch (error) {
         console.error('Error during signup:', error);
         res.render('signup', {
@@ -254,12 +257,21 @@ app.get('/home', isAuthenticated, async (req, res) => {
 
 
 // Render settings page (for adding hotel)
-app.get('/settings', isAuthenticated, (req, res) => {
-    res.render('settings');
-});
-app.get('/book-room', isAuthenticated, (req, res) => {
-    res.render('book-room');
-});
+app.get('/settings', isAuthenticated, async (req, res) => {
+    // Fetch the user's hotels
+    const userHotels = await Hotel.find({ userId: req.session.user._id });
+
+    // Get the last hotel if available
+    const lastHotel = userHotels.length ? userHotels[userHotels.length - 1] : null;
+ 
+    // Check if lastHotel and hotelname are available
+    const hotelname = lastHotel ? lastHotel.hotelname : null;
+
+    // Render the settings page, passing hotelname or null
+    res.render('settings', { hotel:  hotelname});
+}); 
+
+
 
 // Handle hotel form submission
 app.post('/settings', isAuthenticated, async (req, res) => {
@@ -323,27 +335,56 @@ app.get('/room/:roomNumber', async (req, res) => {
 // View booking details route
 app.get('/view-booking/:id', isAuthenticated, async (req, res) => {
     try {
+        const userHotels = await Hotel.find({ userId: req.session.user._id });
+        const lastHotel = userHotels.length ? userHotels[userHotels.length - 1] : null;
         const booking = await Booking.findById(req.params.id);
         if (!booking) {
             return res.status(404).send('Booking not found');
         }
-        res.render('view-booking', { booking }); // Render the view-booking template with booking data
+        res.render('view-booking', { booking ,hotel: lastHotel,}); // Render the view-booking template with booking data
     } catch (error) {
         res.status(500).send('Server error');
     }
 });
  
+app.get('/book-room', isAuthenticated, (req, res) => {
+    res.render('book-room',{
+        message: '',
+        messageType: ''});
  
+});
  
 // Book a room by room number
 app.post('/book-room', isAuthenticated, async (req, res) => {
     const { guestName, guestMobile, roomNumber, checkIn, checkOut, guestCount, roomprice, paymentStatus } = req.body;
 
+    // Validation for guestName: Only alphabets
+    const nameRegex = /^[a-zA-Z\s]+$/;
+    if (!nameRegex.test(guestName)) {
+        return res.render('book-room', {
+            message: 'Invalid guest name. Please use only alphabets and spaces.',
+            messageType: 'error',
+        });
+    }
+
+    // Validation for guestMobile: Indian mobile number format
+    const mobileRegex = /^[6-9]\d{9}$/;
+    if (!mobileRegex.test(guestMobile)) {
+        return res.render('book-room', {
+            message: 'Invalid mobile number. Please provide a valid 10-digit Indian mobile number.',
+            messageType: 'error',
+        });
+    }
+
     // Find the room by the provided room number
     const room = await Room.findOne({ roomNumber, userId: req.session.user._id });
- 
+
     if (!room || room.status !== 'Available') {
-        return res.status(404).send('Room not found or not available for booking.');
+      
+        return res.render('book-room', {
+            message: 'Room not found or not available for booking.',
+            messageType: 'error',
+        });
     }
 
     try {
@@ -357,19 +398,27 @@ app.post('/book-room', isAuthenticated, async (req, res) => {
             guestCount,
             roomprice,
             paymentStatus, // Use the unified payment field
-            userId: req.session.user._id // Associate booking with the logged-in user
+            userId: req.session.user._id, // Associate booking with the logged-in user
         });
         await booking.save();
 
         // Update the room status to 'Booked'
         await Room.findOneAndUpdate({ roomNumber, userId: req.session.user._id }, { status: 'Booked' });
-
-        res.redirect('/home');
+        return res.render('book-room', {
+            message: 'Room is booked successfully',
+            messageType: 'success',
+        });
+       
     } catch (error) {
-        console.error('Error while booking room:', error);
-        res.status(500).send('Internal Server Error');
+      
+        return res.render('book-room', {
+            message: 'Internal Server Error', 
+            messageType: 'error',
+        }); 
     }
 });
+
+
 
 
 // Render the edit form for a booking
@@ -494,7 +543,10 @@ app.get('/logout', (req, res) => {
         if (err) {
             return res.status(500).send("Logout failed.");
         }
-        res.redirect('/');
+        res.render('login', {
+            message: 'Logout Successfully!',
+            messageType: 'success' // Specify the type of the message
+        });
     });
 });
  
