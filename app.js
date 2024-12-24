@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
         message: '',
         messageType: '' // Specify the type of the message
     });
-});
+}); 
 
  
 // Signup page route
@@ -221,6 +221,9 @@ function isAuthenticated(req, res, next) {
 // Dashboard Route
 app.get('/home', isAuthenticated, async (req, res) => {
     try {
+        const { name, email } = req.session.user;
+
+      
         const userHotels = await Hotel.find({ userId: req.session.user._id });
         const lastHotel = userHotels.length ? userHotels[userHotels.length - 1] : null;
 
@@ -247,7 +250,9 @@ app.get('/home', isAuthenticated, async (req, res) => {
             hotel: lastHotel,
             availableRooms,
             bookedRooms,
-            rooms: roomsWithBooking // Pass rooms with booking info
+            rooms: roomsWithBooking,
+            name, // Send only the user's name
+            email, // Pass rooms with booking info
         });
     } catch (error) {
         console.error("Error retrieving hotels:", error);
@@ -494,15 +499,15 @@ app.post('/delete-booking/:id', isAuthenticated, async (req, res) => {
     }
 });
 
+   
  
-
 // View all bookings
 app.get('/bookings', isAuthenticated, async (req, res) => {
     try {
         const bookings = await Booking.find({ userId: req.session.user._id });
 
         res.render('bookings', { bookings });
-    } catch (error) {
+    } catch (error) { 
         console.error("Error retrieving bookings:", error);
         res.status(500).send("Internal Server Error");
     }
@@ -549,6 +554,12 @@ app.get('/logout', (req, res) => {
         });
     });
 });
+ 
+
+
+ 
+
+ 
  
  
 const PORT = process.env.PORT||5000;

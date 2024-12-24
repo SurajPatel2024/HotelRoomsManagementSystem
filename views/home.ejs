@@ -1,83 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/stylehome.css">
     <link rel="stylesheet" href="./css/alert.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|Poppins">
+
     <title>Hotel Rooms Management System</title>
     <style>
         /* General alert styling */
-#alert {
-    display: none;
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #4CAF50; /* Green for success */
-    color: white;
-    padding: 15px 20px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000; /* Ensure it appears above other content */
-    opacity: 0;
-    max-width: 90%; /* Responsive width */
-    font-weight: 600;
-    text-align: center;
-    transition: opacity 0.5s ease, transform 0.5s ease; /* Smooth animations */
-}
+        #alert {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4CAF50;
+            /* Green for success */
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            /* Ensure it appears above other content */
+            opacity: 0;
+            max-width: 90%;
+            /* Responsive width */
+            font-weight: 600;
+            text-align: center;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            /* Smooth animations */
+        }
 
-/* Different types of messages */
-#alert.success {
-    background-color: #4CAF50;
-}
+        /* Different types of messages */
+        #alert.success {
+            background-color: #4CAF50;
+        }
 
-#alert.error {
-    background-color: #F44336; /* Red for error */
-}
+        #alert.error {
+            background-color: #F44336;
+            /* Red for error */
+        }
 
-#alert.warning {
-    background-color: #FFC107; /* Yellow for warning */
-}
+        #alert.warning {
+            background-color: #FFC107;
+            /* Yellow for warning */
+        }
 
-#alert.info {
-    background-color: #2196F3; /* Blue for information */
-}
+        #alert.info {
+            background-color: #2196F3;
+            /* Blue for information */
+        }
 
-/* Show alert with animation */
-#alert.show {
-    display: block;
-    opacity: 1;
-    transform: translateX(-50%) translateY(0); /* Slight slide effect */
-}
+        /* Show alert with animation */
+        #alert.show {
+            display: block;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            /* Slight slide effect */
+        }
 
-/* Hide alert after animation ends */
-#alert.hide {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-20px); /* Fade out and slide up */
-}
+        /* Hide alert after animation ends */
+        #alert.hide {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-20px);
+            /* Fade out and slide up */
+        }
 
-       
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
+
 </head>
+
 <body>
+
     <header>
         <nav class="navbar">
             <div class="logo">
-                <% if (hotel) { %> 
-                    <h1><%= hotel.hotelname %> Hotel</h1>
-                <% } else { %>
-                    <h1>Hotel Management</h1>
-                <% } %>
+                <% if (hotel) { %>
+                    <h1>
+                        <%= hotel.hotelname %> Hotel
+                    </h1>
+                    <% } else { %>
+                        <h1>Hotel Management</h1>
+                        <% } %>
             </div>
             <ul class="nav-links" id="navLinks">
                 <li><a href="/home"><i class="fas fa-home"></i> Dashboard</a></li>
                 <li><a href="/book-room"><i class="fas fa-bed"></i> Book Rooms</a></li>
                 <li><a href="/bookings"><i class="fas fa-calendar-check"></i> View Bookings</a></li>
                 <li><a href="/settings"><i class="fas fa-cogs"></i> Settings</a></li>
+                <li><a href="javascript:void(0)" id="profileLink"><i class="fas fa-user"></i> Profile</a></li>
                 <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+
+                <div id="profileModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" id="closeModal">&times;</span>
+                        <h2>User Profile</h2>
+                        <p><strong>Name:</strong>
+                            <span style="color: #f70303;">
+                                <%= name %>
+                            </span>
+                        </p>
+                        <p><strong>Email:</strong>
+                            <span style="color: #ff00dd; font-weight: 500; ">
+                                <%= email %>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+
             </ul>
             <div class="menu-icon" onclick="toggleSidebar()">&#9776;</div>
         </nav>
@@ -85,7 +155,10 @@
 
     <main class="main-content">
         <h1>Dashboard</h1>
-        <div class="date-time" id="dateTime"></div>
+        <div class="date-time" id="dateTime" style="
+        background: linear-gradient(97deg, rgba(255,0,18,1) 5%, rgba(224,4,98,1) 28%, rgba(195,7,175,1) 39%, rgba(171,10,238,1) 66%, rgba(0,212,255,1) 100%);
+       -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;"></div>
 
         <div class="cards">
             <div class="card">
@@ -93,60 +166,81 @@
                 <h3>Total Rooms</h3>
                 <p>
                     <% if (hotel) { %>
-                        <%= hotel.totelrooms %> 
-                    <% } else { %>
-                        Not Added
-                    <% } %>
+                        <%= hotel.totelrooms %>
+                            <% } else { %>
+                                Not Added
+                                <% } %>
                 </p>
             </div>
             <div class="card">
                 <i class="fas fa-hotel" style="font-size: 20px; color: #ffffff;"></i>
                 <h3>Available Rooms</h3>
-                <p><%= availableRooms %></p>
+                <p>
+                    <%= availableRooms %>
+                </p>
             </div>
             <div class="card">
                 <i style="font-size: 20px; color: #ffffff;" class="fas fa-bed"></i>
-                <h3 > Booked Rooms</h3>
-                <p><%= bookedRooms %></p>
+                <h3> Booked Rooms</h3>
+                <p>
+                    <%= bookedRooms %>
+                </p>
             </div>
         </div>
-   
+
         <h2>Room Status</h2>
         <div class="room-grid">
-            <% rooms.forEach(room => { %>
+            <% rooms.forEach(room=> { %>
                 <div class="room-card">
-                    <h3>Room <%= room.roomNumber %></h3>
-                    <p style="font-weight: 600; color: #FFB302; font-size: 20px;">Status: 
-                    <% if (room.status == 'Booked') { %>
-                        <span style="color: red;"> <%= room.status %></span>
-                    <% } else { %>
-                        <span style="color: rgb(9, 177, 4);"><%= room.status %></span>
-                    <% } %>
-                </p>
-                    <% if (room.booking && room.status == 'Booked') { %>
-                        <p><strong>Check-In:</strong><span style="color: #4CAF50; font-weight: 600;">  <%= room.booking.checkIn.toDateString() %></span> </p>
-                        <p><strong>Check-Out:</strong> <span style="color: #F44336; font-weight: 600;"> <%= room.booking.checkOut.toDateString() %></span></p>
-                    <% } else { %>
-                        <p style="color: red;">No booking data available.</p>
-                    <% } %>
-
-                    <form action="/delete-room" method="POST">
-                        <input type="hidden" name="roomNumber" value="<%= room.roomNumber %>">
-                        <button class="btn delete-btn" type="submit" onclick="delalert()">  <i class="fas fa-trash" style="font-size: 18px; color: #ffffff;"></i> Delete Room</button>
-                       
-                        <% if (room.booking && room.status == 'Booked') { %>
-                            <a href="/bookings" class="btn details-btn">  <i class="fas fa-eye" style="font-size: 18px; color: #ffffff;"></i> View Details</a>
+                    <h3><samp  style=" background: rgb(131,58,180);
+background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+                        -webkit-background-clip: text;
+                         -webkit-text-fill-color: transparent;">Room No. <%= room.roomNumber %> </samp></h3>
+                    <p style="font-weight: 600; color: #f702ff; font-size: 20px;">Status:
+                        <% if (room.status=='Booked' ) { %>
+                            <span style="color: red;">
+                                <%= room.status %>
+                            </span>
+                            <% } else { %>
+                                <span style="color: rgb(9, 177, 4);">
+                                    <%= room.status %>
+                                </span>
+                                <% } %>
+                    </p>
+                    <% if (room.booking && room.status=='Booked' ) { %>
+                        <p><strong>Check-In:</strong><span style="color: #4CAF50; font-weight: 600;">
+                                <%= room.booking.checkIn.toDateString() %>
+                            </span> </p>
+                        <p><strong>Check-Out:</strong> <span style="color: #F44336; font-weight: 600;">
+                                <%= room.booking.checkOut.toDateString() %>
+                            </span></p>
                         <% } else { %>
-                            <a href="/book-room" class="btn book-btn">
-                                 <i class="fas fa-shopping-cart" style="font-size: 20px; color: #ffffff;"></i> Book Now</a>
-                        <% } %>
+                            <p style="color: red;">No booking data available.</p>
+                            <% } %>
 
-                    <a href="/edit-room/<%= room.roomNumber %>" class="btn details-btn" style="background-color:#008CBA" >
-                        <i class="fas fa-edit" style="font-size: 20px; color: #ffffff;"></i> Edit Room
-                    </a>
-                    </form>
+                                <form action="/delete-room" method="POST">
+                                    <input type="hidden" name="roomNumber" value="<%= room.roomNumber %>">
+                                    <button class="btn delete-btn" type="submit" onclick="delalert()"> <i
+                                            class="fas fa-trash" style="font-size: 18px; color: #ffffff;"></i> Delete
+                                        Room</button>
+
+                                    <% if (room.booking && room.status=='Booked' ) { %>
+                                        <a href="/bookings" class="btn details-btn"> <i class="fas fa-eye"
+                                                style="font-size: 18px; color: #ffffff;"></i> View Details</a>
+                                        <% } else { %>
+                                            <a href="/book-room" class="btn book-btn">
+                                                <i class="fas fa-shopping-cart"
+                                                    style="font-size: 20px; color: #ffffff;"></i> Book Now</a>
+                                            <% } %>
+
+                                                <a href="/edit-room/<%= room.roomNumber %>" class="btn details-btn"
+                                                    style="background-color:#008CBA">
+                                                    <i class="fas fa-edit" style="font-size: 20px; color: #ffffff;"></i>
+                                                    Edit Room
+                                                </a>
+                                </form>
                 </div>
-            <% }) %>
+                <% }) %>
         </div>
     </main>
 
@@ -169,28 +263,28 @@
 
         function delalert() {
             const alertElement = document.getElementById('alert');
-            
+
             // Show the alert
             alertElement.style.display = 'block';
             alertElement.style.opacity = '1';  // Fade-in effect
-            
+
             // Hide the alert after 5 seconds
-            setTimeout(function() {
+            setTimeout(function () {
                 alertElement.style.opacity = '0';  // Fade-out effect
-                setTimeout(function() {
+                setTimeout(function () {
                     alertElement.style.display = 'none';  // Hide the alert completely after fade-out
-                }, 300);   
-            }, 6000);  
+                }, 300);
+            }, 6000);
         }
 
         // Date and time update function (unchanged)
         function updateDateTime() {
             const now = new Date();
-            const options = { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
             };
             const formattedDate = now.toLocaleDateString('en-US', options);
 
@@ -207,6 +301,31 @@
         // Update the date and time every second
         setInterval(updateDateTime, 1000);
         updateDateTime();
+
+        // for profile popup 
+        // Get the modal and link
+        var modal = document.getElementById("profileModal");
+        var profileLink = document.getElementById("profileLink");
+        var closeModal = document.getElementById("closeModal");
+
+        // When the user clicks on the profile link, open the modal
+        profileLink.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        closeModal.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside the modal, close it
+        window.onclick = function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+
     </script>
 </body>
+
 </html>

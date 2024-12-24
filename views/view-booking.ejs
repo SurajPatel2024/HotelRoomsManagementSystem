@@ -75,6 +75,7 @@ a:hover {
     transition: background-color 0.3s ease;
     border: none; /* Remove default border */
     cursor: pointer; /* Change cursor to pointer */
+    
 }
 
 #btn:hover {
@@ -99,7 +100,7 @@ a:hover {
 .highlight-text {
     color: rgb(1, 192, 103); /* Green color for emphasis */
     font-weight: 600; /* Bold font weight */
-}
+ }
 
 /* Strong emphasis color */
 strong {
@@ -110,7 +111,9 @@ strong {
 </head>
 <body>
     <div class="container">
-        <h1>Booking Details for Room <%= booking.roomNumber %></h1>
+        <h1 style="background: linear-gradient(97deg, rgba(255,0,18,1) 5%, rgba(224,4,98,1) 28%, rgba(195,7,175,1) 39%, rgba(171,10,238,1) 66%, rgba(0,212,255,1) 100%);
+        -webkit-background-clip: text;
+         -webkit-text-fill-color: transparent;">Booking Details for Room <%= booking.roomNumber %></h1>
         <div class="details">
             <p><strong>Hotel Name:</strong> <span class="highlight-text"><%= hotel.hotelname %> Hotel</span></p>
             <p><strong>Guest Name:</strong> <span class="highlight-text"><%= booking.guestName %></span></p>
